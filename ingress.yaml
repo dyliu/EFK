@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana
+  namespace: logging
+  annotations:
+    "helm.sh/resource-policy": keep
+    kubernetes.io/ingress.class: koderover-admin-nginx
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+  labels:
+    app.kubernetes.io/instance: kibana
+spec:
+  rules:
+  - host: kibana.app.8slan.com
+    http:
+      paths:
+      - path: / 
+        backend:
+          serviceName: kibana
+          servicePort: 5601
